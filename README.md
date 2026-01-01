@@ -42,10 +42,18 @@ You can also run the scraper directly with:
 uv run src/wikirss/scrape.py
 ```
 
-You can use cron to update the feed automatically. For example, to update the feed evey day at 3p.m, add the following line to your crontab:
+You can use cron to update the feed automatically. For example, you could make an update script like:
+
+```bash
+cd /path/to/wikirss
+git pull
+/path/to/uv run --project path/to/wikirss path/to/wikirss/src/wikirss/scrape.py
+```
+
+and then update the feed every day at 3 p.m. by adding the following line to your crontab:
 
 ```
-0 15 * * * cd /path/to/wikirss/ && make update-feed && cp /path/to/wikirss/data/processed/atom.xml /var/www/wikirss/atom.xml
+0 15 * * * /path/to/update_wiki_feed.sh
 ```
 
 I use nginx to serve the feed locally to my miniflux instance.
