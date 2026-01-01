@@ -8,4 +8,6 @@ archive/
 
 logs/**/*.log
 
-data/**/*.parquet
+data/**/*.xml
+
+.env

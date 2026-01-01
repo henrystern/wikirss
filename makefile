@@ -76,3 +76,7 @@ release: all
 		--prerelease \
 		raw_data.zip
 	@rm -f raw_data.zip
+
+update-feed:
+	@echo "Updating feeds..."
+	@uv run ./src/wikirss/scrape.py

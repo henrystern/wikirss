@@ -2,7 +2,22 @@
 
 from pathlib import Path
 
+from dotenv import dotenv_values
 from loguru import logger
+
+# Secrets
+user_agent = dotenv_values().get("USER_AGENT")
+if user_agent is None:
+    logger.warning(
+        "USER_AGENT not found in .env file. Wikipedia will block your requests."
+    )
+
+# URLs
+WIKI_URL = "https://en.wikipedia.org"
+MAIN_PAGE_URL = f"{WIKI_URL}/wiki/Main_Page"
+MAIN_PAGE_HISTORY_URL = (
+    f"{WIKI_URL}/w/index.php?title=Main_Page&action=history"
+)
 
 # Paths
 PROJ_ROOT = Path(__file__).resolve().parents[2]
