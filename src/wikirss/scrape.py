@@ -10,7 +10,7 @@ import requests
 
 from wikirss.config import (
     LOGS_DIR,
-    MAIN_PAGE_HISTORY_URL,
+    MAIN_PAGE_HISTORY_URL,  # noqa: F401
     MAIN_PAGE_URL,
     PROCESSED_DATA_DIR,
 )
@@ -79,7 +79,7 @@ def update_feed(date, permalink, content):
 
     fe = fg.add_entry()
     fe.id(permalink)
-    fe.title(f"Wikipedia Main Page -- {date[:10]}")
+    fe.title(f"Wikipedia Main Page—{date[:10]}")
     fe.link(href=permalink)
     fe.published(date)
     fe.content(content, type="html")
@@ -96,5 +96,9 @@ if __name__ == "__main__":
     headers = {"User-Agent": user_agent, "Accept-encoding": "gzip"}
 
     content = scrape_main_page(MAIN_PAGE_URL, headers)
-    date, permalink = get_last_change(MAIN_PAGE_HISTORY_URL, headers)
+    # BUG: history doesn't record content changes so just return date and regular link
+    # date, permalink = get_last_change(MAIN_PAGE_HISTORY_URL, headers)
+    date = datetime.now(tz=ZoneInfo("America/Toronto")).isoformat()
+    permalink = MAIN_PAGE_URL
+
     update_feed(date, permalink, content)
