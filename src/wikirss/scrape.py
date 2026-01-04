@@ -1,6 +1,7 @@
 """Clean and output data."""
 
 from datetime import datetime
+import uuid
 from zoneinfo import ZoneInfo
 
 from bs4 import BeautifulSoup
@@ -82,8 +83,8 @@ def update_feed(date: str, permalink: str, content: str):
     fg.language("en")
 
     fe = fg.add_entry()
-    fe.id(permalink)
-    fe.title(f"Wikipedia Main Page—{date[:10]}")
+    fe.id(str(uuid.uuid1()))
+    fe.title(f"Wikipedia Main Page: {date[:10]}")
     fe.link(href=permalink)
     fe.published(date)
     fe.content(content, type="html")
