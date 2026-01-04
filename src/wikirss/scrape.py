@@ -16,7 +16,7 @@ from wikirss.config import (
 )
 
 
-def scrape_main_page(url, headers):
+def scrape_main_page(url: str, headers: dict):
     """Scrape Wikipedia's main page and return clean HTML for each section."""
     response = requests.get(url, headers=headers, timeout=10)
     response.raise_for_status()
@@ -46,7 +46,11 @@ def scrape_main_page(url, headers):
     return content
 
 
-def get_last_change(url, headers, tz=ZoneInfo("America/Toronto")):
+def get_last_change(
+    url: str,
+    headers: dict,
+    tz: ZoneInfo = ZoneInfo("America/Toronto"),
+):
     """Get the last change date and permalink from the main page history."""
     hist_response = requests.get(url, headers=headers, timeout=10)
     hist_response.raise_for_status()
@@ -68,7 +72,7 @@ def get_last_change(url, headers, tz=ZoneInfo("America/Toronto")):
     return date, permalink
 
 
-def update_feed(date, permalink, content):
+def update_feed(date: str, permalink: str, content: str):
     """Update the RSS and Atom feeds with the latest main page content."""
     fg = FeedGenerator()
     fg.id("http://hstern.ca/wikirss")
